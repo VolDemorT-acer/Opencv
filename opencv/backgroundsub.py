@@ -14,13 +14,13 @@ while True :
     kernel = np.ones((3,3),np.uint8)
     roi=frame[100:300, 100:300]
     fgmask=fgbg.apply(roi)
-   
-    #lower_skin = np.array([155,205,200], dtype=np.uint8)
-    #upper_skin = np.array([200,255,255], dtype=np.uint8)
+    print(fgmask.shape)
+    lower_skin = np.array([155,205,200], dtype=np.uint8)
+    upper_skin = np.array([200,255,255], dtype=np.uint8)
     #fgmask=cv.resize(fgmask,(frame.shape[0],frame.shape[1]))
     cv.rectangle(frame,(100,100),(300,300),(0,255,0),0)
     #cv.rectangle(fgmask,(100,100),(300,300),(0,255,0),0) 
-    mask=cv.inRange(fgmask,lower_skin,upper_skin)   
+    mask=cv.inRange(fgmask,(155,205,200),upper_skin)   
     #mask=cv.cvtColor(mask,cv.COLOR_HSV2RGB)
     #mask=cv.cvtColor(mask,cv.COLOR_RGB2GRAY)
     mask= cv.dilate(mask,kernel,iterations = 4)

@@ -97,8 +97,9 @@ def count(thresholded, segmented):
         #     25% of the circumference of the circular ROI
         if ((cY + (cY * 0.25)) > (y + h)) and ((circumference * 0.25) > c.shape[0]):
             count += 1
+    print(count)
 
-    return count
+    return (cX,cY) 
 
 
 
@@ -151,10 +152,13 @@ if __name__ == "__main__":
             if hand is not None:
                 # if yes, unpack the thresholded image and
                 # segmented region
+                position_array=[]
                 (thresholded, segmented) = hand
-                a=count(thresholded,segmented)
-                print(a)
-                cv2.putText(clone,"Number of Finger-{}".format(a),(100,50),cv2.FONT_HERSHEY_COMPLEX,1.4,(0,255,0),4)
+                (x,y)=count(thresholded,segmented)
+                position_array.append((x,y))
+                # print(position_array)
+                
+                cv2.putText(clone,"Position({},{})".format(x,y),(100,50),cv2.FONT_HERSHEY_COMPLEX,1.4,(0,255,0),4)
 
                 # draw the segmented region and display the frame
                 cv2.drawContours(clone, [segmented + (right, top)], -1, (0, 0, 255))
